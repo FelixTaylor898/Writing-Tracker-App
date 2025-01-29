@@ -1,0 +1,25 @@
+POST /users/register HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "username": "admin123",
+    "password": "password123",
+    "email": "admin@writing.com"
+}
+
+###
+
+POST /users/authenticate HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "username": "admin123",
+    "password": "password123"
+}
+
+###
+
+GET /users HTTP/1.1
+Host: localhost:8080
