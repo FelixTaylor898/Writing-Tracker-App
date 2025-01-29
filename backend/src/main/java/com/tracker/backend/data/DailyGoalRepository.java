@@ -9,13 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DailyGoalRepository extends JpaRepository<DailyGoal, Integer> {
+public interface DailyGoalRepository extends JpaRepository<DailyGoal, Long> {
 
     // Find DailyGoals by category
     List<DailyGoal> findByCategory(Category category);
 
     // Find DailyGoals by user ID
-    List<DailyGoal> findByUserId(Integer userId);
+    List<DailyGoal> findByUserId(Long userId);
 
     // Find DailyGoals by active status
     List<DailyGoal> findByStatus(Boolean status);

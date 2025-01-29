@@ -1,109 +1,40 @@
 package com.tracker.backend.data;
 
-import com.tracker.backend.security.AppUserService;
-import com.tracker.backend.models.AppUser;
+import com.tracker.backend.BackendApplication;
+import com.tracker.backend.models.DailyGoal;
+import com.tracker.backend.models.enums.Category;
+import com.tracker.backend.models.enums.DayOfWeek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AppUserServiceTest {
+@SpringBootTest(classes = BackendApplication.class)
+class DailyGoalRepositoryTest {
 
-    @Mock
-    private AppUserRepository userRepository;
+    @Autowired
+    private DailyGoalRepository dailyGoalRepository;
 
-    @InjectMocks
-    private AppUserService userService;
+    @Autowired
+    private KnownGoodState state;
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);  // Initialize mocks
+    public void resetDatabase() {
+        state.reset();
     }
 
-    @Test
-    void testFindAll() {
-        List<AppUser> mockUsers = new ArrayList<>();
-        mockUsers.add(new AppUser(1L, "John Doe", "john@example.com"));
-        mockUsers.add(new AppUser(2L, "Jane Doe", "jane@example.com"));
-
-        when(userRepository.findAll()).thenReturn(mockUsers);
-
-        List<AppUser> users = userService.findAll();
-        assertNotNull(users);
-        assertEquals(2, users.size());
-        verify(userRepository, times(1)).findAll();
-    }
 
     @Test
-    void testFindById_WhenUserExists() {
-        AppUser mockUser = new AppUser(1L, "JohnDoe", "john@example.com");
-
-        when(userRepository.findById(1L)).thenReturn(Optional.of(mockUser));
-
-        AppUser user = userService.findById(1L);
-        assertNotNull(user);
-        assertEquals("JohnDoe", user.getUsername());
-        verify(userRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testFindById_WhenUserDoesNotExist() {
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
-
-        AppUser user = userService.findById(1L);
-        assertNull(user);
-        verify(userRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testSave() {
-        AppUser newUser = new AppUser(0, "John Doe", "john@example.com");
-        newUser.setPasswordHash("password123");
-        AppUser savedUser = new AppUser(1L, "John Doe", "john@example.com");
-
-        when(userRepository.save(newUser)).thenReturn(savedUser);
-
-        AppUser result = userService.save(newUser);
-        assertNotNull(result);
-        assertEquals(1L, result.getUserId());
-        verify(userRepository, times(1)).save(newUser);
-    }
-
-    @Test
-    void testDelete() {
-        Long userId = 1L;
-        doNothing().when(userRepository).deleteById(userId);
-
-        userService.delete(userId);
-        verify(userRepository, times(1)).deleteById(userId);
-    }
-
-    @Test
-    void testFindByEmail_WhenUserExists() {
-        AppUser mockUser = new AppUser(1L, "JohnDoe", "john@example.com");
-
-        when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.of(mockUser));
-
-        AppUser user = userService.findByEmail("john@example.com");
-        assertNotNull(user);
-        assertEquals("JohnDoe", user.getUsername());
-        verify(userRepository, times(1)).findByEmail("john@example.com");
-    }
-
-    @Test
-    void testFindByEmail_WhenUserDoesNotExist() {
-        when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.empty());
-
-        AppUser user = userService.findByEmail("john@example.com");
-        assertNull(user);
-        verify(userRepository, times(1)).findByEmail("john@example.com");
+    public void testFindAll() {
+        List<DailyGoal> goals = dailyGoalRepository.findAll();
+        assertEquals(5, goals.size(), "There should be 5 goals");
     }
 }

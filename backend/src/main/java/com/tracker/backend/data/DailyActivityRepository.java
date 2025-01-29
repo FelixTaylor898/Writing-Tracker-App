@@ -1,7 +1,6 @@
 package com.tracker.backend.data;
 
 import com.tracker.backend.models.DailyActivity;
-import com.tracker.backend.models.DailyGoal;
 import com.tracker.backend.models.enums.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +13,5 @@ public interface DailyActivityRepository extends JpaRepository<DailyActivity, In
     // Find DailyGoals by user ID
     List<DailyActivity> findByUserId(Integer userId);
 
-    List<DailyGoal> findByCategory(Category category);
+    List<DailyActivity> findByCategory(Category category);
 }

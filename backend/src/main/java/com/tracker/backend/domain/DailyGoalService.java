@@ -26,7 +26,7 @@ public class DailyGoalService {
     }
 
     // Update an existing daily goal
-    public DailyGoal updateDailyGoal(Integer goalId, DailyGoal updatedGoal) {
+    public DailyGoal updateDailyGoal(Long goalId, DailyGoal updatedGoal) {
         Optional<DailyGoal> optionalGoal = dailyGoalRepository.findById(goalId);
         if (optionalGoal.isPresent()) {
             DailyGoal existingGoal = optionalGoal.get();
@@ -41,7 +41,7 @@ public class DailyGoalService {
     }
 
     // Delete a daily goal by ID
-    public void deleteDailyGoal(Integer goalId) {
+    public void deleteDailyGoal(Long goalId) {
         dailyGoalRepository.deleteById(goalId);
     }
 
@@ -51,7 +51,7 @@ public class DailyGoalService {
     }
 
     // Find DailyGoals by user ID
-    public List<DailyGoal> getGoalsByUserId(Integer userId) {
+    public List<DailyGoal> getGoalsByUserId(Long userId) {
         return dailyGoalRepository.findByUserId(userId);
     }
 

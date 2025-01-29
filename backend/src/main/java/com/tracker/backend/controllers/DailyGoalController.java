@@ -32,7 +32,7 @@ public class DailyGoalController {
     // Update an existing daily goal
     @PutMapping("/{goalId}")
     public ResponseEntity<DailyGoal> updateDailyGoal(
-            @PathVariable Integer goalId,
+            @PathVariable Long goalId,
             @RequestBody DailyGoal updatedGoal) {
         DailyGoal goal = dailyGoalService.updateDailyGoal(goalId, updatedGoal);
         if (goal != null) {
@@ -43,7 +43,7 @@ public class DailyGoalController {
 
     // Delete a daily goal by ID
     @DeleteMapping("/{goalId}")
-    public ResponseEntity<Void> deleteDailyGoal(@PathVariable Integer goalId) {
+    public ResponseEntity<Void> deleteDailyGoal(@PathVariable Long goalId) {
         dailyGoalService.deleteDailyGoal(goalId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -57,7 +57,7 @@ public class DailyGoalController {
 
     // Get DailyGoals by user ID
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<DailyGoal>> getGoalsByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List<DailyGoal>> getGoalsByUserId(@PathVariable Long userId) {
         List<DailyGoal> goals = dailyGoalService.getGoalsByUserId(userId);
         return new ResponseEntity<>(goals, HttpStatus.OK);
     }

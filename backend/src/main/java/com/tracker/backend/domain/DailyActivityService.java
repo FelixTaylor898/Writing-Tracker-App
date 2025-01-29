@@ -2,7 +2,6 @@ package com.tracker.backend.domain;
 
 import com.tracker.backend.data.DailyActivityRepository;
 import com.tracker.backend.models.DailyActivity;
-import com.tracker.backend.models.DailyGoal;
 import com.tracker.backend.models.enums.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class DailyActivityService {
     }
 
     // Update an existing daily activity
-    public DailyActivity updateDailyGoal(Integer activityId, DailyActivity updatedActivity) {
+    public DailyActivity updateDailyActivity(Integer activityId, DailyActivity updatedActivity) {
         Optional<DailyActivity> optionalActivity = dailyActivityRepository.findById(activityId);
         if (optionalActivity.isPresent()) {
             DailyActivity existingActivity = optionalActivity.get();
@@ -44,7 +43,7 @@ public class DailyActivityService {
         dailyActivityRepository.deleteById(activityId);
     }
 
-    public List<DailyGoal> getActivityByCategory(Category category) {
+    public List<DailyActivity> getActivityByCategory(Category category) {
         return dailyActivityRepository.findByCategory(category);
     }
 

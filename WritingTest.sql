@@ -4,7 +4,7 @@ USE WritingTest;
 
 -- Table for user
 CREATE TABLE User (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,  -- User's email address
     password_hash VARCHAR(255) NOT NULL,  -- For storing hashed passwords
@@ -14,8 +14,8 @@ CREATE TABLE User (
 
 -- Table for daily goal
 CREATE TABLE DailyGoal (
-    goal_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    goal_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
     category ENUM('product', 'process', 'self-care') NOT NULL,
     goal_value INT,  -- Goal value in minutes
     day_of_week ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
@@ -27,8 +27,8 @@ CREATE TABLE DailyGoal (
 
 -- Table for daily activity
 CREATE TABLE DailyActivity (
-    activity_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    activity_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
     category ENUM('product', 'process', 'self-care') NOT NULL,
     name VARCHAR(100) NOT NULL,  -- Name of the activity
     activity_description VARCHAR(255),  -- Optional description of the activity
@@ -40,8 +40,8 @@ CREATE TABLE DailyActivity (
 
 -- Table for grab bag activity
 CREATE TABLE GrabBagActivity (
-    activity_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    activity_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
     category ENUM('product', 'process', 'self-care') NOT NULL,
     name VARCHAR(100) NOT NULL,  -- Name of the activity
     activity_description VARCHAR(255),  -- Optional description of the activity
@@ -51,8 +51,8 @@ CREATE TABLE GrabBagActivity (
 
 -- Table for reward
 CREATE TABLE Reward (
-    reward_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    reward_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
     reward_type ENUM('small', 'medium', 'big') NOT NULL,
     name VARCHAR(100) NOT NULL, -- Name of the reward
     reward_description VARCHAR(255),  -- Description of the reward
@@ -89,11 +89,11 @@ BEGIN
 
     -- Insert daily goals for the first user
     INSERT INTO DailyGoal (user_id, category, goal_value, day_of_week, goal_time, status) VALUES
-        (1, 'product', 120, 'Monday', '09:00:00', 1),
-        (1, 'process', 60, 'Tuesday', '10:30:00', 1),
-        (1, 'self-care', 30, 'Wednesday', NULL, 1),
-        (1, 'product', 90, 'Thursday', '08:00:00', 1),
-        (1, 'self-care', 45, 'Friday', '17:00:00', 1);
+        (1, 'PRODUCT', 120, 'MONDAY', '09:00:00', 1),
+        (1, 'PROCESS', 60, 'TUESDAY', '10:30:00', 1),
+        (1, 'SELF-CARE', 30, 'WEDNESDAY', NULL, 1),
+        (1, 'PRODUCT', 90, 'THURSDAY', '08:00:00', 1),
+        (1, 'SELF-CARE', 45, 'FRIDAY', '17:00:00', 1);
 
     -- Insert daily activities for the first user
     INSERT INTO DailyActivity (user_id, category, name, activity_description, duration, date) VALUES
@@ -114,8 +114,6 @@ BEGIN
         (1, 'small', 'Coffee Break', 'Enjoy a coffee break after completing a daily goal.'),
         (1, 'medium', 'Dinner Out', 'Dinner at a favorite restaurant after finishing a chapter.'),
         (1, 'big', 'Weekend Trip', 'A weekend trip for completing the first draft.');
-
-    -- Optionally, you can insert more sample data for other users here if needed
 
 END $$
 
